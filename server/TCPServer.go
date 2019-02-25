@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"goNetworkTransfering/shared"
 	"log"
 	"net"
 )
@@ -23,9 +24,7 @@ func createTCPServer() {
 	for {
 		conn, err := listener.Accept()
 
-		if err != nil {
-			log.Fatal(err)
-		}
+		shared.ErrorValidation(err)
 
 		go echo(conn)
 	}
@@ -42,13 +41,10 @@ func echo(conn net.Conn) {
 			break
 		}
 
-		// output message received
-		fmt.Println("Bytes from client: ", message)
+		fmt.Printf("received: %d bytes from: %s\n", len(message), conn.RemoteAddr())
 
 		_, err := conn.Write(message)
 
-		if err != nil {
-			log.Fatal(err)
-		}
+		shared.ErrorValidation(err)
 	}
 }
