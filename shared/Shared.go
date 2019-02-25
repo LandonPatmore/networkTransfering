@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+const BytesInKB = 1024
+
 func createFilledBytesArray(size int) [] byte {
 	filledArray := make([] byte, size-1)
 

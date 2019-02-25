@@ -8,8 +8,6 @@ import (
 	"net"
 )
 
-const BYTES_IN_KB = 1024
-
 func main() {
 	var serverAddress string
 	fmt.Println("Server address: ")
@@ -25,7 +23,7 @@ func main() {
 
 		var bytesToSend int
 		_, e := fmt.Scanf("%d", &bytesToSend)
-		bytesToSend = bytesToSend * BYTES_IN_KB
+		bytesToSend = bytesToSend * shared.BytesInKB
 
 		shared.ErrorValidation(e)
 

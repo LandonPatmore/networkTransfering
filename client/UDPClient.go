@@ -18,10 +18,11 @@ func main() {
 
 	for {
 		// read in input from stdin
-		fmt.Println("How many bytes to send: ")
+		fmt.Println("How many bytes to send (in KB): ")
 
 		var bytesToSend int
 		_, e := fmt.Scanf("%d", &bytesToSend)
+		bytesToSend = bytesToSend * shared.BytesInKB
 
 		shared.ErrorValidation(e)
 
