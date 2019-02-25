@@ -1,7 +1,6 @@
 package shared
 
 import (
-	"fmt"
 	"log"
 	"net"
 	"time"
@@ -20,7 +19,7 @@ func CurrentTimeNano() int64 {
 }
 
 func (r RTT) Difference() float64 {
-	return float64(r.FinalTime-r.InitialTime) / 1e6 // Milliseconds
+	return float64(r.FinalTime - r.InitialTime)
 }
 
 func ErrorValidation(err error) {
@@ -31,7 +30,7 @@ func ErrorValidation(err error) {
 
 func (r *RTT) GetInfo() {
 	r.FinalTime = CurrentTimeNano()
-	fmt.Printf("Round Trip Time:\n\nIntitial Time: %d nanoseconds\nFinal Time: %d nanoseconds\nTotal Time: %f Milliseconds\n", r.InitialTime, r.FinalTime, r.Difference())
+	log.Printf("Round Trip Time:\n\nIntitial Time: %d nanoseconds\nFinal Time: %d nanoseconds\nTotal Time: %f nanoseconds (%f milliseconds)\n", r.InitialTime, r.FinalTime, r.Difference(), r.Difference() / 1e6)
 }
 
 func SendData(conn net.Conn, converted int) RTT {

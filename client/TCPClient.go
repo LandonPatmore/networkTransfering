@@ -6,8 +6,9 @@ import (
 	"goNetworkTransfering/shared"
 	"log"
 	"net"
-	"strconv"
 )
+
+const BYTES_IN_KB = 1024
 
 func main() {
 	var serverAddress string
@@ -20,10 +21,11 @@ func main() {
 
 	for {
 		// read in input from stdin
-		fmt.Println("How many bytes to send: ")
+		fmt.Println("How many bytes to send (in KB): ")
 
 		var bytesToSend int
 		_, e := fmt.Scanf("%d", &bytesToSend)
+		bytesToSend = bytesToSend * BYTES_IN_KB
 
 		shared.ErrorValidation(e)
 
@@ -34,12 +36,12 @@ func main() {
 		_, _ = bufio.NewReader(conn).ReadBytes('\n')
 
 		roundTripTime.GetInfo()
-		log.Println("Throughput: " + strconv.FormatFloat(measureThroughput(roundTripTime, bytesToSend), 'f', 6, 64))
+		measureThroughput(roundTripTime, bytesToSend)
 	}
 }
 
-func measureThroughput(rtt shared.RTT, numBytesSent int) float64 {
+func measureThroughput(rtt shared.RTT, numBytesSent int) {
 	bitsSent := float64(8 * numBytesSent)
-	rttInSeconds := rtt.Difference()
-	return (bitsSent / (rttInSeconds / 2)) * 1000 // Megabits/sec
+	rttInNanoSeconds := rtt.Difference()
+	log.Printf("Throughput: %f Megabits/sec", (bitsSent/(rttInNanoSeconds/2))*1000)
 }
