@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <script>
+        window.onload = function () {
+
+            function createChartData(data) {
+                var rttData = data.rtt
+                var throughputData = data.throughput
+                var messageTimeData = data.message_size_time
+
+                var dict = {
+                    "RTT": rttData,
+                    "Throughput": throughputData,
+                    "Message Size Time": messageTimeData
+                }
+
+                for (var key in dict) {
+                    var chartName = data.type + '-' + data.client + '-' + data.server + '-' + key
+
+                    if (key == "RTT" || key == "Message Size Time") {
+                        $("body").append('<div id="' + chartName + '" style="height: 300px; width: 100%;"></div>');
+                        var dataPoints = [];
+
+                        var chart = new CanvasJS.Chart(chartName, {
+                            animationEnabled: true,
+                            theme: "light2", // "light1", "light2", "dark1", "dark2"
+                            title: {
+                                text: data.type + " " + data.client + " to " + data.server + " - " + key
+                            },
+                            axisY: {
+                                title: "Time (Milliseconds)"
+                            },
+                            axisX: {
+                                title: "Bytes"
+                            },
+                            data: [{
+                                type: "bar",
+                                dataPoints: dataPoints
+                            }]
+                        });
+
+                        for (var i = 0; i < dict[key].length; i++) {
+                            dataPoints.push({
+                                label: dict[key][i].message_size,
+                                y: dict[key][i].total_time
+                            });
+                        }
+                    } else {
+                        if (dict[key].length != 0) {
+                            $("body").append('<div id="' + chartName + '" style="height: 300px; width: 100%;"></div>');
+                            var dataPoints = [];
+
+                            var chart = new CanvasJS.Chart(chartName, {
+                                animationEnabled: true,
+                                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                                title: {
+                                    text: data.type + " " + data.client + " to " + data.server + " - " + key
+                                },
+                                axisY: {
+                                    title: "Megabits/sec"
+                                },
+                                axisX: {
+                                    title: "Bytes"
+                                },
+                                data: [{
+                                    type: "bar",
+                                    dataPoints: dataPoints
+                                }]
+                            });
+
+                            for (var i = 0; i < dict[key].length; i++) {
+                                dataPoints.push({
+                                    label: dict[key][i].message_size,
+                                    y: dict[key][i].megabits
+                                });
+                            }
+                        }
+                    }
+                    chart.render();
+                }
+
+            }
+
+            $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/TCP_laptop_to_pi.json", createChartData);
+            $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/TCP_rho_to_pi.json", createChartData);
+            $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/TCP_UDel_to_pi.json", createChartData);
+            $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/UDP_laptop_to_pi.json", createChartData);
+            $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/UDP_rho_to_pi.json", createChartData);
+            $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/UDP_UDel_to_pi.json", createChartData);
+
+        }
+    </script>
+</head>
+
+<body>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+
+</html>
