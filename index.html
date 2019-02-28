@@ -41,10 +41,29 @@
                             }]
                         });
 
+                        var tpCopy = dict[key].concat()
+                            tpCopy.sort(function (a, b) {
+                                return a.total_time - b.total_time;
+                            });
+
+                            var q1 = tpCopy[Math.floor((tpCopy.length / 4))].total_time;
+                            // Likewise for q3. 
+                            var q3 = tpCopy[Math.ceil((tpCopy.length * (3 / 4)))].total_time;
+                            var iqr = q3 - q1;
+
+                            // Then find min and max tpCopy
+                            var maxValue = q3 + iqr * 1.5;
+                            var minValue = q1 - iqr * 1.5;
+
+                            // Then filter anything beyond or beneath these tpCopy.
+                            var filteredtpCopy = tpCopy.filter(function (x) {
+                                return (x.total_time <= maxValue) && (x.total_time >= minValue);
+                            });
+
                         for (var i = 0; i < dict[key].length; i++) {
                             dataPoints.push({
                                 label: dict[key][i].message_size,
-                                y: dict[key][i].total_time
+                                y: filteredtpCopy[i].total_time
                             });
                         }
                     } else {
@@ -59,7 +78,7 @@
                                     text: data.type + " " + data.client + " to " + data.server + " - " + key
                                 },
                                 axisY: {
-                                    title: "Megabits/sec"
+                                    title: "Megabytes/sec"
                                 },
                                 axisX: {
                                     title: "Bytes"
@@ -70,10 +89,29 @@
                                 }]
                             });
 
+                            var tpCopy = dict[key].concat()
+                            tpCopy.sort(function (a, b) {
+                                return a.megabits - b.megabits;
+                            });
+
+                            var q1 = tpCopy[Math.floor((tpCopy.length / 4))].megabits;
+                            // Likewise for q3. 
+                            var q3 = tpCopy[Math.ceil((tpCopy.length * (3 / 4)))].megabits;
+                            var iqr = q3 - q1;
+
+                            // Then find min and max tpCopy
+                            var maxValue = q3 + iqr * 1.5;
+                            var minValue = q1 - iqr * 1.5;
+
+                            // Then filter anything beyond or beneath these tpCopy.
+                            var filteredtpCopy = tpCopy.filter(function (x) {
+                                return (x.megabits <= maxValue) && (x.megabits >= minValue);
+                            });
+
                             for (var i = 0; i < dict[key].length; i++) {
                                 dataPoints.push({
                                     label: dict[key][i].message_size,
-                                    y: dict[key][i].megabits
+                                    y: (filteredtpCopy[i].megabits / 80)
                                 });
                             }
                         }

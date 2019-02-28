@@ -151,8 +151,8 @@ func MeasureThroughput(conn net.Conn) [] Throughput {
 
 		bitsSent := float64(8 * bytes)
 		rttInNanoSeconds := rtt.Difference()
-		megabits := (bitsSent / (rttInNanoSeconds / 2)) * 1000
-		fmt.Printf("Throughput: %f Megabits/sec\n", megabits) //Converts bits/nano to megabits/sec
+		megabits := ((bitsSent / (rttInNanoSeconds / 2)) * 1000) / 8
+		fmt.Printf("Throughput: %f Megabytes/sec\n", megabits) //Converts bits/nano to megabits/sec
 
 		throughput = append(throughput, Throughput{MessageSize: bytes, Megabits: megabits})
 
