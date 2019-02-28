@@ -1,0 +1,246 @@
+{
+    "client": "Laptop",
+    "server": "pi.cs.oswego.edu",
+    "type": "TCP",
+    "rtt": [
+        {
+            "message_size": 1,
+            "total_time": 0.114
+        },
+        {
+            "message_size": 1,
+            "total_time": 0.308
+        },
+        {
+            "message_size": 1,
+            "total_time": 0.076
+        },
+        {
+            "message_size": 1,
+            "total_time": 0.161
+        },
+        {
+            "message_size": 1,
+            "total_time": 0.136
+        },
+        {
+            "message_size": 64,
+            "total_time": 0.073
+        },
+        {
+            "message_size": 64,
+            "total_time": 0.179
+        },
+        {
+            "message_size": 64,
+            "total_time": 0.086
+        },
+        {
+            "message_size": 64,
+            "total_time": 0.172
+        },
+        {
+            "message_size": 64,
+            "total_time": 0.157
+        },
+        {
+            "message_size": 1024,
+            "total_time": 0.227
+        },
+        {
+            "message_size": 1024,
+            "total_time": 0.18
+        },
+        {
+            "message_size": 1024,
+            "total_time": 0.178
+        },
+        {
+            "message_size": 1024,
+            "total_time": 0.165
+        },
+        {
+            "message_size": 1024,
+            "total_time": 0.205
+        }
+    ],
+    "throughput": [
+        {
+            "message_size": 1024,
+            "megabits": 204.8
+        },
+        {
+            "message_size": 1024,
+            "megabits": 87.6149732620321
+        },
+        {
+            "message_size": 1024,
+            "megabits": 74.13574660633485
+        },
+        {
+            "message_size": 1024,
+            "megabits": 78.76923076923077
+        },
+        {
+            "message_size": 1024,
+            "megabits": 93.62285714285714
+        },
+        {
+            "message_size": 16384,
+            "megabits": 1807.8896551724138
+        },
+        {
+            "message_size": 16384,
+            "megabits": 789.5903614457831
+        },
+        {
+            "message_size": 16384,
+            "megabits": 766.5029239766083
+        },
+        {
+            "message_size": 16384,
+            "megabits": 816.6479750778817
+        },
+        {
+            "message_size": 16384,
+            "megabits": 738.4338028169014
+        },
+        {
+            "message_size": 65536,
+            "megabits": 1993.490494296578
+        },
+        {
+            "message_size": 65536,
+            "megabits": 1872.4571428571428
+        },
+        {
+            "message_size": 65536,
+            "megabits": 1640.964006259781
+        },
+        {
+            "message_size": 65536,
+            "megabits": 1428.5776566757493
+        },
+        {
+            "message_size": 65536,
+            "megabits": 1623.1826625386996
+        },
+        {
+            "message_size": 262144,
+            "megabits": 3061.535766423358
+        },
+        {
+            "message_size": 262144,
+            "megabits": 2864.96174863388
+        },
+        {
+            "message_size": 262144,
+            "megabits": 152.42037938803693
+        },
+        {
+            "message_size": 262144,
+            "megabits": 159.91703522952568
+        },
+        {
+            "message_size": 262144,
+            "megabits": 171.58126406218042
+        },
+        {
+            "message_size": 1048576,
+            "megabits": 329.2749254200031
+        },
+        {
+            "message_size": 1048576,
+            "megabits": 306.752527745781
+        },
+        {
+            "message_size": 1048576,
+            "megabits": 148.24660027745622
+        },
+        {
+            "message_size": 1048576,
+            "megabits": 137.61404257064348
+        },
+        {
+            "message_size": 1048576,
+            "megabits": 117.7918851935323
+        }
+    ],
+    "message_size_time": [
+        {
+            "message_size": 1024,
+            "message_amount": 1024,
+            "total_time": 2358.834
+        },
+        {
+            "message_size": 1024,
+            "message_amount": 1024,
+            "total_time": 2294.37
+        },
+        {
+            "message_size": 1024,
+            "message_amount": 1024,
+            "total_time": 2350.338
+        },
+        {
+            "message_size": 1024,
+            "message_amount": 1024,
+            "total_time": 2308.041
+        },
+        {
+            "message_size": 1024,
+            "message_amount": 1024,
+            "total_time": 2213.343
+        },
+        {
+            "message_size": 512,
+            "message_amount": 2048,
+            "total_time": 4496.706
+        },
+        {
+            "message_size": 512,
+            "message_amount": 2048,
+            "total_time": 4386.458
+        },
+        {
+            "message_size": 512,
+            "message_amount": 2048,
+            "total_time": 4364.491
+        },
+        {
+            "message_size": 512,
+            "message_amount": 2048,
+            "total_time": 4542.189
+        },
+        {
+            "message_size": 512,
+            "message_amount": 2048,
+            "total_time": 4463.245
+        },
+        {
+            "message_size": 256,
+            "message_amount": 4096,
+            "total_time": 8724.32
+        },
+        {
+            "message_size": 256,
+            "message_amount": 4096,
+            "total_time": 8844.514
+        },
+        {
+            "message_size": 256,
+            "message_amount": 4096,
+            "total_time": 9141.06
+        },
+        {
+            "message_size": 256,
+            "message_amount": 4096,
+            "total_time": 8870.946
+        },
+        {
+            "message_size": 256,
+            "message_amount": 4096,
+            "total_time": 9052.415
+        }
+    ]
+}
