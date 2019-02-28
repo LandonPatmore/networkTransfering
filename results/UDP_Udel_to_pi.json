@@ -1,5 +1,5 @@
 {
-    "client": "",
+    "client": "UDel",
     "server": "pi.cs.oswego.edu",
     "type": "UDP",
     "rtt": [
