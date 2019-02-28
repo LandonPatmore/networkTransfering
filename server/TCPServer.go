@@ -12,6 +12,7 @@ func main() {
 	TCPServerMode()
 }
 
+// Determines the mode to put the server into
 func TCPServerMode() {
 	var mode string
 
@@ -37,6 +38,7 @@ func TCPServerMode() {
 	}
 }
 
+// Creates a server
 func createTCPServer(e bool) {
 	listener, err := net.Listen("tcp", ":8721")
 
@@ -53,6 +55,9 @@ func createTCPServer(e bool) {
 	}
 }
 
+// Reads the packets coming in from the client and then either
+// echos the message back or sends acknowledgment packets of
+// 1 byte to the client
 func readConnection(conn net.Conn, echo bool) {
 	for {
 		message, connError := bufio.NewReader(conn).ReadBytes('\n')

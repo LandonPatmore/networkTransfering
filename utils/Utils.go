@@ -10,23 +10,29 @@ import (
 
 const BytesInKB = 1024
 
+// Keeps track of the initial time and final time
 type TimeMeasurement struct {
 	InitialTime int64
 	FinalTime   int64
 }
 
+// Determines the total amount of time in milliseconds
 func (r TimeMeasurement) GetTotalTimeInMilliseconds() float64 {
 	return float64(r.Difference() / 1e6) // Milliseconds
 }
 
+// Determines the difference between the final time and initial time in nanoseconds
 func (r TimeMeasurement) Difference() float64 {
 	return float64(r.FinalTime - r.InitialTime) // Nanoseconds
 }
 
+// Gets the Round-Trip Time for data sent to a server
 func (r TimeMeasurement) GetRTT() {
 	fmt.Printf("Round Trip Time Measurement:\n\nIntitial TimeMeasurement: %d nanoseconds\nFinal TimeMeasurement: %d nanoseconds\nTotal Total TimeMeasurement: %f nanoseconds (%f milliseconds)\n", r.InitialTime, r.FinalTime, r.Difference(), r.GetTotalTimeInMilliseconds())
 }
 
+// Creates an array filled with bytes determined by a size
+// entered by a user
 func CreateFilledArray(size int) [] byte {
 	filledArray := make([] byte, size-1)
 
@@ -35,16 +41,20 @@ func CreateFilledArray(size int) [] byte {
 	return filledArray
 }
 
+// Gets the current time in nanoseconds
 func CurrentTimeNano() int64 {
 	return time.Now().UnixNano()
 }
 
+// Checks if there are any errors panics if there are
 func ErrorValidation(err error) {
 	if err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 	}
 }
 
+// Determines whether or not the input should be converted
+// to KB or kept in bytes
 func GetInBytesOrKiloBytes(bytes bool) int {
 	var bytesToSend int
 
@@ -63,6 +73,7 @@ func GetInBytesOrKiloBytes(bytes bool) int {
 	return bytesToSend * BytesInKB
 }
 
+// Measures the Return-Trip time of a stream of bytes
 func MeasureRTT(conn net.Conn) {
 	for {
 		bytes := GetInBytesOrKiloBytes(true)
@@ -77,6 +88,8 @@ func MeasureRTT(conn net.Conn) {
 	}
 }
 
+// Measures the total time it takes to send (n) amount of bytes in
+// (m) amount of messages
 func MeasureTotalTime(conn net.Conn) {
 	for {
 		bytes := GetInBytesOrKiloBytes(true)
@@ -99,6 +112,7 @@ func MeasureTotalTime(conn net.Conn) {
 	}
 }
 
+// Sends multiple messages in sequential order
 func SendMultipleMessages(conn net.Conn, bytes int, messageAmount int) {
 	for i := 0; i < messageAmount; i++ {
 		conn.Write(CreateFilledArray(bytes))
@@ -107,10 +121,13 @@ func SendMultipleMessages(conn net.Conn, bytes int, messageAmount int) {
 	}
 }
 
+// Checks if a number is a multiple of a Megabyte
 func isMultipleOfOneMegabyte(bytes int) bool {
 	return 1048576/bytes%2 == 0
 }
 
+// Determines the amount of messages to send for a certain
+// amount of bytes
 func determineMessagesToSend(bytes int) int {
 	return 1048576 / bytes
 }

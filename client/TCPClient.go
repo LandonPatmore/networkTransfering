@@ -20,6 +20,7 @@ func main() {
 	TCPDetermineClientMode(conn)
 }
 
+// Determines the mode to put the client into
 func TCPDetermineClientMode(conn net.Conn) {
 	var mode string
 
@@ -50,6 +51,7 @@ func TCPDetermineClientMode(conn net.Conn) {
 	}
 }
 
+// Measures the throughput in Megabits/sec
 func measureThroughput(conn net.Conn) {
 	for {
 		bytes := utils.GetInBytesOrKiloBytes(false)

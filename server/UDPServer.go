@@ -11,6 +11,7 @@ func main() {
 	UDPServerMode()
 }
 
+// Determines the mode to put the server into
 func UDPServerMode() {
 	var mode string
 
@@ -36,6 +37,9 @@ func UDPServerMode() {
 	}
 }
 
+// Creates a server and reads the packets coming in from the client and then either
+// echos the message back or sends acknowledgment packets of
+// 1 byte to the client
 func createUDPServer(echo bool) {
 	ServerAddr, err := net.ResolveUDPAddr("udp", ":8274")
 

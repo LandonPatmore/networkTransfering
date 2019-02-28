@@ -19,6 +19,7 @@ func main() {
 	UDPDetermineClientMode(conn)
 }
 
+// Determines the mode to put the client into
 func UDPDetermineClientMode(conn net.Conn) {
 	var mode string
 
