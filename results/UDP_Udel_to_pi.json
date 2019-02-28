@@ -1,0 +1,145 @@
+{
+    "client": "",
+    "server": "pi.cs.oswego.edu",
+    "type": "UDP",
+    "rtt": [
+        {
+            "message_size": 1,
+            "total_time": 0.122
+        },
+        {
+            "message_size": 1,
+            "total_time": 0.123
+        },
+        {
+            "message_size": 1,
+            "total_time": 0.113
+        },
+        {
+            "message_size": 1,
+            "total_time": 0.123
+        },
+        {
+            "message_size": 1,
+            "total_time": 0.118
+        },
+        {
+            "message_size": 64,
+            "total_time": 0.087
+        },
+        {
+            "message_size": 64,
+            "total_time": 0.174
+        },
+        {
+            "message_size": 64,
+            "total_time": 0.126
+        },
+        {
+            "message_size": 64,
+            "total_time": 0.109
+        },
+        {
+            "message_size": 64,
+            "total_time": 0.111
+        },
+        {
+            "message_size": 1024,
+            "total_time": 0.271
+        },
+        {
+            "message_size": 1024,
+            "total_time": 0.191
+        },
+        {
+            "message_size": 1024,
+            "total_time": 0.138
+        },
+        {
+            "message_size": 1024,
+            "total_time": 0.118
+        },
+        {
+            "message_size": 1024,
+            "total_time": 0.147
+        }
+    ],
+    "throughput": [],
+    "message_size_time": [
+        {
+            "message_size": 1024,
+            "message_amount": 1024,
+            "total_time": 3873.045
+        },
+        {
+            "message_size": 1024,
+            "message_amount": 1024,
+            "total_time": 4011.96
+        },
+        {
+            "message_size": 1024,
+            "message_amount": 1024,
+            "total_time": 3912.506
+        },
+        {
+            "message_size": 1024,
+            "message_amount": 1024,
+            "total_time": 3896.182
+        },
+        {
+            "message_size": 1024,
+            "message_amount": 1024,
+            "total_time": 3950.553
+        },
+        {
+            "message_size": 512,
+            "message_amount": 2048,
+            "total_time": 6534.256
+        },
+        {
+            "message_size": 512,
+            "message_amount": 2048,
+            "total_time": 6547.624
+        },
+        {
+            "message_size": 512,
+            "message_amount": 2048,
+            "total_time": 6485.971
+        },
+        {
+            "message_size": 512,
+            "message_amount": 2048,
+            "total_time": 7080.839
+        },
+        {
+            "message_size": 512,
+            "message_amount": 2048,
+            "total_time": 9826.703
+        },
+        {
+            "message_size": 256,
+            "message_amount": 4096,
+            "total_time": 17838.916
+        },
+        {
+            "message_size": 256,
+            "message_amount": 4096,
+            "total_time": 19434.561
+        },
+        {
+            "message_size": 256,
+            "message_amount": 4096,
+            "total_time": 19444.263
+        },
+        {
+            "message_size": 256,
+            "message_amount": 4096,
+            "total_time": 20759.747
+        },
+        {
+            "message_size": 256,
+            "message_amount": 4096,
+            "total_time": 26117.626
+        }
+    ]
+}

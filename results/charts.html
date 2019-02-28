@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script>
+        var dataPoints = [];
+
+
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            title: {
+                text: "Daily Sleep Statistics of Age Group 12 - 20"
+            },
+            axisX: {
+                valueFormatString: "DDD"
+            },
+            axisY: {
+                title: "Sleep Time (in Hours)"
+            },
+            data: [{
+                type: "boxAndWhisker",
+                dataPoints: dataPoints
+            }]
+        });
+
+
+
+        function addData(data) {
+            for (var i = 0; i < data.rtt.length; i++) {
+                dataPoints.push({
+                    x: new Date(data.rtt[i].message_size),
+                    y: data.rtt[i].total_time
+                });
+            }
+            chart.render();
+        }
+
+        $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/TCP_laptop_to_pi.json", addData);
+    </script>
+</head>
+
+<body>
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+</body>
+
+</html>
