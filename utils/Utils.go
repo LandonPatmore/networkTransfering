@@ -127,6 +127,8 @@ func MeasureRTT(conn net.Conn) [] RTT {
 		timeMeasurement.GetRTT()
 
 		rtts = append(rtts, RTT{MessageSize: bytes, TotalTime: timeMeasurement.GetTotalTimeInMilliseconds()})
+
+		time.Sleep(1 * time.Second)
 	}
 
 	return rtts
@@ -153,6 +155,8 @@ func MeasureThroughput(conn net.Conn) [] Throughput {
 		fmt.Printf("Throughput: %f Megabits/sec\n", megabits) //Converts bits/nano to megabits/sec
 
 		throughput = append(throughput, Throughput{MessageSize: bytes, Megabits: megabits})
+
+		time.Sleep(1 * time.Second)
 	}
 
 	return throughput
@@ -182,6 +186,8 @@ func MeasureTotalTime(conn net.Conn) [] MessageSizeTime {
 			fmt.Printf("Total TimeMeasurement: %f Milliseconds\n", totalTime)
 
 			messageSizeTime = append(messageSizeTime, MessageSizeTime{MessageSize: bytes, MessageAmount: messageAmount, TotalTime: totalTime})
+
+			time.Sleep(1 * time.Second)
 		} else {
 			fmt.Println("Not a multiple of a MegaByte.")
 			break

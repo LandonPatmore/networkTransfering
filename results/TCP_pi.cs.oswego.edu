@@ -1,0 +1,76 @@
+{
+  "client": "Personal Laptop",
+  "server": "pi.cs.oswego.edu",
+  "type": "TCP",
+  "rtt": [
+    {
+      "message_size": 1024,
+      "total_time": 0.073552
+    },
+    {
+      "message_size": 1024,
+      "total_time": 0.409086
+    },
+    {
+      "message_size": 1024,
+      "total_time": 0.212449
+    },
+    {
+      "message_size": 1024,
+      "total_time": 0.185267
+    },
+    {
+      "message_size": 1024,
+      "total_time": 0.197689
+    }
+  ],
+  "throughput": [
+    {
+      "message_size": 1048576,
+      "megabits": 2133.847237481154
+    },
+    {
+      "message_size": 1048576,
+      "megabits": 773.9058025258794
+    },
+    {
+      "message_size": 1048576,
+      "megabits": 1000.5619105291966
+    },
+    {
+      "message_size": 1048576,
+      "megabits": 1451.4820031353063
+    },
+    {
+      "message_size": 1048576,
+      "megabits": 1509.836942049448
+    }
+  ],
+  "message_size_time": [
+    {
+      "message_size": 1024,
+      "message_amount": 1024,
+      "total_time": 146.22212
+    },
+    {
+      "message_size": 1024,
+      "message_amount": 1024,
+      "total_time": 146.372451
+    },
+    {
+      "message_size": 1024,
+      "message_amount": 1024,
+      "total_time": 143.672447
+    },
+    {
+      "message_size": 1024,
+      "message_amount": 1024,
+      "total_time": 143.799898
+    },
+    {
+      "message_size": 1024,
+      "message_amount": 1024,
+      "total_time": 146.894762
+    }
+  ]
+}
