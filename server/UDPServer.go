@@ -2,37 +2,65 @@ package main
 
 import (
 	"fmt"
-	"goNetworkTransfering/shared"
+	"goNetworkTransfering/utils"
 	"net"
+	"os"
 )
 
 func main() {
-	createUDPServer()
+	UDPServerMode()
 }
 
-func createUDPServer() {
+func UDPServerMode() {
+	var mode string
+
+	for {
+		fmt.Println("What mode?\n1. Echo Server\n2. Read Data Server")
+		_, e := fmt.Scanf("%s", &mode)
+		utils.ErrorValidation(e)
+		switch mode {
+		case "1":
+			fmt.Println("Echo Mode...")
+			createUDPServer(true)
+			break
+		case "2":
+			fmt.Println("Read Data Mode...")
+			createUDPServer(false)
+			break
+		case "exit":
+			fmt.Println("Exiting...")
+			os.Exit(0)
+		default:
+			fmt.Println("Error, not a selectable mode.")
+		}
+	}
+}
+
+func createUDPServer(echo bool) {
 	ServerAddr, err := net.ResolveUDPAddr("udp", ":8274")
 
-	shared.ErrorValidation(err)
+	utils.ErrorValidation(err)
 
-	ServerConn, err := net.ListenUDP("udp", ServerAddr)
-	shared.ErrorValidation(err)
+	conn, err := net.ListenUDP("udp", ServerAddr)
+	utils.ErrorValidation(err)
 
-	defer ServerConn.Close()
+	defer conn.Close()
 
 	buf := make([]byte, 1024)
 
 	for {
-		fmt.Printf("Accepting packets\n")
+		n, addr, err := conn.ReadFromUDP(buf)
 
-		n, addr, err := ServerConn.ReadFromUDP(buf)
-
-		shared.ErrorValidation(err)
+		utils.ErrorValidation(err)
 
 		fmt.Printf("received: %d bytes from: %s\n", n, addr)
 
-		_, sendError := ServerConn.WriteTo(buf[0:n], addr)
-
-		shared.ErrorValidation(sendError)
+		if echo {
+			_, err := conn.WriteTo(buf[0:n], addr)
+			utils.ErrorValidation(err)
+		} else {
+			_, err := conn.WriteTo([] byte{10}, addr)
+			utils.ErrorValidation(err)
+		}
 	}
 }

@@ -3,48 +3,74 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"goNetworkTransfering/shared"
-	"log"
+	"goNetworkTransfering/utils"
 	"net"
+	"os"
 )
 
 func main() {
-	createTCPServer()
+	TCPServerMode()
 }
 
-func createTCPServer() {
-	listener, err := net.Listen("tcp", ":8274")
+func TCPServerMode() {
+	var mode string
 
-	if err != nil {
-		log.Fatal(err)
+	for {
+		fmt.Println("What mode?\n1. Echo Server\n2. Read Data Server")
+		_, e := fmt.Scanf("%s", &mode)
+		utils.ErrorValidation(e)
+		switch mode {
+		case "1":
+			fmt.Println("Echo Mode...")
+			createTCPServer(true)
+			break
+		case "2":
+			fmt.Println("Read Data Mode...")
+			createTCPServer(false)
+			break
+		case "exit":
+			fmt.Println("Exiting...")
+			os.Exit(0)
+		default:
+			fmt.Println("Error, not a selectable mode.")
+		}
 	}
+}
+
+func createTCPServer(e bool) {
+	listener, err := net.Listen("tcp", ":8721")
+
+	utils.ErrorValidation(err)
 
 	defer listener.Close()
 
 	for {
 		conn, err := listener.Accept()
 
-		shared.ErrorValidation(err)
+		utils.ErrorValidation(err)
 
-		go echo(conn)
+		go readConnection(conn, e)
 	}
 }
 
-func echo(conn net.Conn) {
+func readConnection(conn net.Conn, echo bool) {
 	for {
-
 		message, connError := bufio.NewReader(conn).ReadBytes('\n')
 
 		if connError != nil {
-			log.Println(connError)
-			conn.Close()
+			fmt.Println(connError)
+			utils.ErrorValidation(conn.Close())
 			break
 		}
 
 		fmt.Printf("received: %d bytes from: %s\n", len(message), conn.RemoteAddr())
 
-		_, err := conn.Write(message)
-
-		shared.ErrorValidation(err)
+		if echo {
+			_, err := conn.Write(message)
+			utils.ErrorValidation(err)
+		} else {
+			_, err := conn.Write([] byte{10})
+			utils.ErrorValidation(err)
+		}
 	}
 }

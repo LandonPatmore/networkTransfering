@@ -1,10 +1,10 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"goNetworkTransfering/shared"
+	"goNetworkTransfering/utils"
 	"net"
+	"os"
 )
 
 func main() {
@@ -14,24 +14,33 @@ func main() {
 
 	conn, connError := net.Dial("udp", serverAddress+":8274")
 
-	shared.ErrorValidation(connError)
+	utils.ErrorValidation(connError)
+
+	UDPDetermineClientMode(conn)
+}
+
+func UDPDetermineClientMode(conn net.Conn) {
+	var mode string
 
 	for {
-		// read in input from stdin
-		fmt.Println("How many bytes to send (in KB): ")
-
-		var bytesToSend int
-		_, e := fmt.Scanf("%d", &bytesToSend)
-		bytesToSend = bytesToSend * shared.BytesInKB
-
-		shared.ErrorValidation(e)
-
-		// send to UDP Socket
-		roundTripTime := shared.SendData(conn, bytesToSend)
-
-		// listen for reply
-		_, _ = bufio.NewReader(conn).ReadBytes('\n')
-
-		roundTripTime.GetInfo()
+		fmt.Println("What mode?\n1. Measure RTT\n2. Measure Total Time")
+		_, e := fmt.Scanf("%s", &mode)
+		utils.ErrorValidation(e)
+		switch mode {
+		case "1":
+			fmt.Println("Measuring Time...")
+			utils.MeasureRTT(conn)
+			break
+		case "2":
+			fmt.Println("Measuring Total Time...")
+			utils.MeasureTotalTime(conn)
+			break
+		case "exit":
+			fmt.Println("Exiting...")
+			utils.ErrorValidation(conn.Close())
+			os.Exit(0)
+		default:
+			fmt.Println("Error, not a selectable mode.")
+		}
 	}
 }
