@@ -5,6 +5,7 @@ import (
 	"goNetworkTransfering/utils"
 	"net"
 	"os"
+	"time"
 )
 
 func main() {
@@ -69,16 +70,19 @@ func ClientMode(conn net.Conn, outputData utils.OutputData, t string) {
 		switch mode {
 		case 1:
 			fmt.Println("Measuring Time...")
+			changeServerMode(conn, true)
 			rtts := utils.MeasureRTT(conn)
 			outputData.RTT = append(outputData.RTT, rtts...)
 			break
 		case 2:
 			fmt.Println("Measuring Throughput...(TCP Only)")
+			changeServerMode(conn, true)
 			throughput := utils.MeasureThroughput(conn)
 			outputData.Throughput = append(outputData.Throughput, throughput...)
 			break
 		case 3:
 			fmt.Println("Measuring Total Time...")
+			changeServerMode(conn, false)
 			messageSizeTime := utils.MeasureTotalTime(conn)
 			outputData.MessageSizeTime = append(outputData.MessageSizeTime, messageSizeTime...)
 			break
@@ -94,4 +98,16 @@ func ClientMode(conn net.Conn, outputData utils.OutputData, t string) {
 			fmt.Println("Error, not a selectable mode.")
 		}
 	}
+}
+
+func changeServerMode(conn net.Conn, echo bool) {
+	if echo {
+		conn.Write([] byte{1, 10})
+		fmt.Println("Changed server mode to echo mode")
+	} else {
+		conn.Write([] byte{2, 10})
+		fmt.Println("Changed server mode to acknowledge mode")
+	}
+
+	time.Sleep(2 * time.Second)
 }
