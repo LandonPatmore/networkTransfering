@@ -25,7 +25,7 @@
 
                         var chart = new CanvasJS.Chart(chartName, {
                             animationEnabled: true,
-                            theme: "light2", // "light1", "light2", "dark1", "dark2"
+                            theme: "light2",
                             title: {
                                 text: data.type + " " + data.client + " to " + data.server + " - " + key
                             },
@@ -42,28 +42,32 @@
                         });
 
                         var tpCopy = dict[key].concat()
-                            tpCopy.sort(function (a, b) {
-                                return a.total_time - b.total_time;
-                            });
+                        tpCopy.sort(function (a, b) {
+                            return a.total_time - b.total_time;
+                        });
 
-                            var q1 = tpCopy[Math.floor((tpCopy.length / 4))].total_time;
-                            // Likewise for q3. 
-                            var q3 = tpCopy[Math.ceil((tpCopy.length * (3 / 4)))].total_time;
-                            var iqr = q3 - q1;
+                        var q1 = tpCopy[Math.floor((tpCopy.length / 4))].total_time;
+                        // Likewise for q3. 
+                        var q3 = tpCopy[Math.ceil((tpCopy.length * (3 / 4)))].total_time;
+                        var iqr = q3 - q1;
 
-                            // Then find min and max tpCopy
-                            var maxValue = q3 + iqr * 1.5;
-                            var minValue = q1 - iqr * 1.5;
+                        // Then find min and max tpCopy
+                        var maxValue = q3 + iqr * 1.5;
+                        var minValue = q1 - iqr * 1.5;
 
-                            // Then filter anything beyond or beneath these tpCopy.
-                            var filteredtpCopy = tpCopy.filter(function (x) {
-                                return (x.total_time <= maxValue) && (x.total_time >= minValue);
-                            });
+                        // Then filter anything beyond or beneath these tpCopy.
+                        var filteredtpCopy = tpCopy.filter(function (x) {
+                            return (x.total_time <= maxValue) && (x.total_time >= minValue);
+                        }).sort(function (a, b) {
+                            return a.message_size - b.message_size;
+                        });
 
-                        for (var i = 0; i < filteredtpCopy.length; i++) {
+                        var averagedData = getAverageOfData(filteredtpCopy, true)
+
+                        for (var i = 0; i < averagedData.length; i++) {
                             dataPoints.push({
-                                label: filteredtpCopy[i].message_size,
-                                y: filteredtpCopy[i].total_time
+                                label: averagedData[i].message_size,
+                                    y: averagedData[i].average
                             });
                         }
                     } else {
@@ -73,7 +77,7 @@
 
                             var chart = new CanvasJS.Chart(chartName, {
                                 animationEnabled: true,
-                                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                                theme: "light2",
                                 title: {
                                     text: data.type + " " + data.client + " to " + data.server + " - " + key
                                 },
@@ -106,12 +110,16 @@
                             // Then filter anything beyond or beneath these tpCopy.
                             var filteredtpCopy = tpCopy.filter(function (x) {
                                 return (x.megabits <= maxValue) && (x.megabits >= minValue);
+                            }).sort(function (a, b) {
+                                return a.message_size - b.message_size;
                             });
 
-                            for (var i = 0; i < filteredtpCopy.length; i++) {
+                            var averagedData = getAverageOfData(filteredtpCopy, false)
+
+                            for (var i = 0; i < averagedData.length; i++) {
                                 dataPoints.push({
-                                    label: filteredtpCopy[i].message_size,
-                                    y: (filteredtpCopy[i].megabits / 80)
+                                    label: averagedData[i].message_size,
+                                    y: averagedData[i].average
                                 });
                             }
                         }
@@ -119,6 +127,60 @@
                     chart.render();
                 }
 
+            }
+
+            function getAverageOfData(data, isTimeMeasurement) {
+                if (isTimeMeasurement) {
+                    var averagedData = []
+                    var byteSize = null
+                    var currentData = {}
+                    data.forEach(dataPoint => {
+                        if (byteSize == null) {
+                            byteSize = dataPoint.message_size
+                            currentData.message_size = byteSize
+                            currentData.total_time = 0
+                            currentData.size = 0
+                        } else if (dataPoint.message_size != byteSize) {
+                            currentData.average = currentData.total_time / currentData.size
+                            averagedData.push(currentData)
+                            currentData = {}
+                            byteSize = dataPoint.message_size
+                            currentData.message_size = byteSize
+                            currentData.total_time = 0
+                            currentData.size = 0
+                        }
+                        currentData.total_time = currentData.total_time + dataPoint.total_time
+                        currentData.size = currentData.size + 1
+                    });
+                    currentData.average = currentData.total_time / currentData.size
+                    averagedData.push(currentData)
+                    return averagedData
+                } else {
+                    var averagedData = []
+                    var byteSize = null
+                    var currentData = {}
+                    data.forEach(dataPoint => {
+                        if (byteSize == null) {
+                            byteSize = dataPoint.message_size
+                            currentData.message_size = byteSize
+                            currentData.total_megabytes = 0
+                            currentData.size = 0
+                        } else if (dataPoint.message_size != byteSize) {
+                            currentData.average = (currentData.total_megabytes / currentData.size) / 80 // to get from megabits to megabytes due to megnitude error in reporting
+                            averagedData.push(currentData)
+                            currentData = {}
+                            byteSize = dataPoint.message_size
+                            currentData.message_size = byteSize
+                            currentData.total_megabytes = 0
+                            currentData.size = 0
+                        }
+                        currentData.total_megabytes = currentData.total_megabytes + dataPoint.megabits
+                        currentData.size = currentData.size + 1
+                    });
+                    currentData.average = (currentData.total_megabytes / currentData.size) / 80 // to get from megabits to megabytes due to megnitude error in reporting
+                    averagedData.push(currentData)
+                    return averagedData
+                }
             }
 
             $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/TCP_laptop_to_pi.json", createChartData);
