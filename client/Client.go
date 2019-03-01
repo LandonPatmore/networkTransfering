@@ -13,6 +13,7 @@ func main() {
 	createClient(t)
 }
 
+// Helper to figure out the client to create, whether TCP or UDP
 func determineClientType() int {
 	var clientType int
 	for {
@@ -30,6 +31,7 @@ func determineClientType() int {
 	}
 }
 
+// Creates a TCP or UDP client based on user input
 func createClient(t int) {
 	outputData := utils.CreateOutputData()
 
@@ -100,6 +102,7 @@ func ClientMode(conn net.Conn, outputData utils.OutputData, t string) {
 	}
 }
 
+// Helper to change the mode of the server for different functions
 func changeServerMode(conn net.Conn, echo bool) {
 	if echo {
 		conn.Write([] byte{1, 10})

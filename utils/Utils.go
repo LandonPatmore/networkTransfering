@@ -43,6 +43,7 @@ type TimeMeasurement struct {
 	FinalTime   int64
 }
 
+// Helper to create a struct for outputting data
 func CreateOutputData() OutputData {
 	return OutputData{
 		Client:          "",
