@@ -60,9 +60,9 @@
                                 return (x.total_time <= maxValue) && (x.total_time >= minValue);
                             });
 
-                        for (var i = 0; i < dict[key].length; i++) {
+                        for (var i = 0; i < filteredtpCopy.length; i++) {
                             dataPoints.push({
-                                label: dict[key][i].message_size,
+                                label: filteredtpCopy[i].message_size,
                                 y: filteredtpCopy[i].total_time
                             });
                         }
@@ -108,9 +108,9 @@
                                 return (x.megabits <= maxValue) && (x.megabits >= minValue);
                             });
 
-                            for (var i = 0; i < dict[key].length; i++) {
+                            for (var i = 0; i < filteredtpCopy.length; i++) {
                                 dataPoints.push({
-                                    label: dict[key][i].message_size,
+                                    label: filteredtpCopy[i].message_size,
                                     y: (filteredtpCopy[i].megabits / 80)
                                 });
                             }
@@ -122,10 +122,10 @@
             }
 
             $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/TCP_laptop_to_pi.json", createChartData);
-            $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/TCP_rho_to_pi.json", createChartData);
-            $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/TCP_UDel_to_pi.json", createChartData);
             $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/UDP_laptop_to_pi.json", createChartData);
+            $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/TCP_rho_to_pi.json", createChartData);
             $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/UDP_rho_to_pi.json", createChartData);
+            $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/TCP_UDel_to_pi.json", createChartData);
             $.getJSON("https://raw.githubusercontent.com/landonp1203/goNetworkTransfering/master/results/UDP_UDel_to_pi.json", createChartData);
 
         }
